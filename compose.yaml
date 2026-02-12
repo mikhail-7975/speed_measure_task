@@ -1,0 +1,25 @@
+services:
+  ros2:
+    build: .      
+    container_name: speed_measure_2
+    image: ros2h_speed_measure:build_x86
+    network_mode: host
+    ipc: host
+    environment:
+      - "DISPLAY"
+      - "NVIDIA_DRIVER_CAPABILITIES=all"
+      - "QT_X11_NO_MITSHM=1"
+      - "LD_LIBRARY_PATH=/usr/lib64:/usr/lib:/usr/local/lib:${LD_LIBRARY_PATH}"
+    volumes:
+      - ".:/robotics"
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - "/dev:/dev"
+      - "/tmp:/tmp"
+    stdin_open: true
+    tty: true
+    device_cgroup_rules:
+      - 'c 189:* rmw'
+    # privileged: true
+    devices:
+      - "/dev:/dev"
+
